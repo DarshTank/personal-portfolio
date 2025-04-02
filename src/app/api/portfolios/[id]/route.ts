@@ -14,7 +14,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const { id } = params;
     await connectToDatabase();
 
     // Try to find the portfolio without authentication first
@@ -124,20 +124,10 @@ export async function PATCH(
       const body = await req.json();
       
       // Update portfolio fields
-      portfolio.username = body.username || portfolio.username;
-      portfolio.fullname = body.fullname || portfolio.fullname;
-      portfolio.role = body.role || portfolio.role;
-      portfolio.brandTitle = body.brandTitle || portfolio.brandTitle;
-      portfolio.email = body.email || portfolio.email;
-      portfolio.about = body.about || portfolio.about;
-      portfolio.linkedin = body.linkedin || portfolio.linkedin;
-      portfolio.github = body.github || portfolio.github;
-      portfolio.instagram = body.instagram || portfolio.instagram;
-      portfolio.twitter = body.twitter || portfolio.twitter;
-      portfolio.resumeUrl = body.resumeUrl || portfolio.resumeUrl;
-      portfolio.template = body.template || portfolio.template;
-      portfolio.sections = body.sections || portfolio.sections;
-      portfolio.lastUpdated = new Date();
+      if (body.title) portfolio.title = body.title;
+      if (body.description) portfolio.description = body.description;
+      if (body.sections) portfolio.sections = body.sections;
+      if (typeof body.isPublished === 'boolean') portfolio.isPublished = body.isPublished;
 
       await portfolio.save();
 

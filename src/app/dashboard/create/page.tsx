@@ -43,7 +43,7 @@ export default function CreatePortfolio() {
         description: "Portfolio created successfully",
       });
 
-      router.push(`/dashboard/portfolio/${portfolio.id}/edit`);
+      router.push(`/dashboard/portfolio/${portfolio._id}/edit`);
     } catch (error) {
       console.error("Error creating portfolio:", error);
       toast({
